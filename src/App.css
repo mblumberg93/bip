@@ -1,0 +1,99 @@
+.state-view {
+  position: fixed;
+  right: 100px;
+  top: 10px;
+}
+
+.lobby {
+  position: fixed;
+  left: 10%;
+}
+
+.lobby-section {
+  display: inline-block;
+  margin-right: 50px;
+}
+
+.game {
+  width: 100%;
+  height: 100%;
+}
+
+.side-info {
+  position: fixed;
+  bottom: 5%;
+}
+
+.side-info-left {
+  left: 10%;
+}
+
+.side-info-right {
+  right: 10%;
+}
+
+.side-info-head-left {
+  color: red;
+}
+
+.side-info-head-right {
+  color: blue;
+}
+
+.table  {
+  width: 80%;
+  height: 35vw;
+  background-color: burlywood;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 0px 20px
+}
+
+.rack {
+  height: 28vw;
+  width: 28vw;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rack-left {
+  left: 3vw;
+}
+
+.rack-right {
+  right: 3vw;
+}
+
+.square {
+  width: 4vw;
+  height: 4vw;
+}
+
+.cup {
+  width: 180%;
+  height: 180%;
+  margin-top: -45%;
+  margin-left: -45%;
+  border-radius: 50%;
+  
+  box-sizing: border-box;
+  border: 1px solid white;
+  cursor: pointer;
+}
+
+.cup-left {
+  background-color: red;
+}
+
+.cup-right {
+  background-color: blue;
+}
+
+.cup-inactive {
+  background-color: grey;
+}

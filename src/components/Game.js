@@ -16,8 +16,8 @@ class Game extends Component {
         this.props.handleChooseStartSide(side);
     }
 
-    handleEndTurn(side) {
-        this.props.handleEndTurn(side);
+    handleEndTurn() {
+        this.props.handleEndTurn();
     }
 
     render() {
@@ -29,24 +29,28 @@ class Game extends Component {
                                   side="left"
                                   currentTurn={this.props.currentTurn}
                                   myTurn={this.props.myTurn}
-                                  mySide={this.props.mySide}
+                                  myPlayer={this.props.myPlayer}
                                   handleStart={() => this.handleChooseStartSide("left")}
-                                  handleEndTurn={side => this.handleEndTurn(side)}>
+                                  handleEndTurn={() => this.handleEndTurn()}>
                         </SideInfo>
                         <SideInfo key="sideinforight"
                                   side="right"
                                   currentTurn={this.props.currentTurn}
                                   myTurn={this.props.myTurn}
-                                  mySide={this.props.mySide}
+                                  myPlayer={this.props.myPlayer}
                                   handleStart={() => this.handleChooseStartSide("right")}
-                                  handleEndTurn={side => this.handleEndTurn(side)}>
+                                  handleEndTurn={() => this.handleEndTurn()}>
                         </SideInfo>
                     </React.Fragment>
                 }
-                <Table turn={this.state.turn}
-                       left_formation={this.state.left_formation}
+                <Table left_formation={this.state.left_formation}
                        right_formation={this.state.right_formation}
-                       isPlaying={this.props.isPlaying}></Table>
+                       isPlaying={this.props.isPlaying}
+                       pubnub={this.props.pubnub}
+                       gameChannel={this.props.gameChannel}
+                       currentTurn={this.props.currentTurn}
+                       myPlayer={this.props.myPlayer}>
+                </Table>
             </div>
         );
     }

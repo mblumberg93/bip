@@ -7,6 +7,14 @@ class Rack extends Component {
         this.state = { };
     }
 
+    handleCupClick(event) {
+        this.props.handleCupClick({
+            side: event.side,
+            row: event.row,
+            column: event.column
+        });
+    }
+
     render() {
         const squares = this.props.grid.map((position, i) => {
             return (
@@ -16,7 +24,8 @@ class Rack extends Component {
                         row={position.row}
                         column={position.column}
                         hasCup={position.hasCup}
-                        turn={this.props.turn}>
+                        active={position.active}
+                        handleCupClick={(event) => this.handleCupClick(event)}>
                 </Square>
             );
         })

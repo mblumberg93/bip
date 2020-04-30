@@ -39,33 +39,39 @@ class App extends Component {
     // Check that the player is connected to a channel
     if (this.lobbyChannel != null) {
       this.pubnub.getMessage(this.lobbyChannel, (msg) => {
-        // Create a different channel for the game
-        this.gameChannel = 'bipgame--' + this.roomId;
+        if (msg.message.startGame) {
+          // Create a different channel for the game
+          this.gameChannel = 'bipgame--' + this.roomId;
 
-        this.pubnub.subscribe({
-          channels: [this.gameChannel]
-        });
+          this.pubnub.subscribe({
+            channels: [this.gameChannel]
+          });
 
-        if (!this.state.isRoomCreator) {
-          this.state.myPlayer = 'right';
+          if (!this.state.isRoomCreator) {
+            this.setState({myPlayer: 'right'})
+          }
+
+          this.setState({
+            isPlaying: true,
+            createDisabled: true
+          });
         }
-
-        this.setState({
-          isPlaying: true,
-          createDisabled: true
-        });
-      }); 
-    }
-
-    if (this.gameChannel != null) {
-      this.pubnub.getMessage(this.gameChannel, (msg) => {
         if (msg.message.startSide) {
           this.setState({ 
             currentTurn: msg.message.startSide,
             myTurn: this.state.myPlayer === msg.message.startSide
           });
         }
-      });
+        if (msg.message.newSide) {
+          this.setState({ 
+            currentTurn: msg.message.newSide,
+            myTurn: this.state.myPlayer === msg.message.newSide
+          });
+        }
+        if (msg.message.endGame && msg.message.side !== this.state.myPlayer) {
+          alert("The Game Has Ended");
+        }
+      }); 
     }
   }
 
@@ -117,7 +123,7 @@ class App extends Component {
           
           this.pubnub.publish({
             message: {
-              notRoomCreator: true, //maybe can rename, doesnt seem to be used
+              startGame: true,
             },
             channel: this.lobbyChannel
           });
@@ -131,21 +137,30 @@ class App extends Component {
   }
 
   handleEndGame() {
-    this.setState({
-      myPlayer: null,
-      isPlaying: false,
-      isRoomCreator: false,
-      createDisabled: false,
-      myTurn: false,
+    this.pubnub.publish({
+      message: {
+        endGame: true,
+        side: this.state.myPlayer
+      },
+      channel: this.lobbyChannel
     });
 
-    this.lobbyChannel = null;
-    this.gameChannel = null;
-    this.roomId = null;  
+    this.setState({
+      currentTurn: null,
+      myPlayer: null,
+      myTurn: false,
+      isPlaying: false,
+      isRoomCreator: false,
+      createDisabled: false
+    });
 
     this.pubnub.unsubscribe({
       channels : [this.lobbyChannel, this.gameChannel]
     });
+
+    this.lobbyChannel = null;
+    this.gameChannel = null;
+    this.roomId = null;
   }
 
   handleChooseStartSide(side) {
@@ -157,17 +172,18 @@ class App extends Component {
       message: {
         startSide: side
       },
-      channel: this.gameChannel
+      channel: this.lobbyChannel
     });
   }
 
   handleEndTurn() {
     const newCurrentTurn = this.state.currentTurn === 'left' ? 'right' : 'left'
-    this.setState({ 
-      currentTurn: newCurrentTurn,
-      myTurn: false
+    this.pubnub.publish({
+      message: {
+        newSide: newCurrentTurn
+      },
+      channel: this.lobbyChannel
     });
-    //send a message to the channel
   }
 
   render() {
@@ -181,21 +197,14 @@ class App extends Component {
                handleEndGame={() => this.handleEndGame()}>
         </Lobby>
         <Game currentTurn={this.state.currentTurn}
-              mySide={this.state.mySide}
               myPlayer={this.state.myPlayer}
               myTurn={this.state.myTurn}
               isPlaying={this.state.isPlaying}
-              handleChooseStartSide={(side) => this.handleChooseStartSide(side)}>
+              pubnub={this.pubnub}
+              gameChannel={this.gameChannel}
+              handleChooseStartSide={(side) => this.handleChooseStartSide(side)}
+              handleEndTurn={() => this.handleEndTurn()}>
         </Game>
-        <div className="state-view">
-          <div><b>Current State</b></div>
-          <div>currentTurn: {this.state.currentTurn}</div>
-          <div>myPlayer: {this.state.myPlayer}</div>
-          <div>myTurn: {this.state.myTurn.toString()}</div>
-          <div>isPlaying: {this.state.isPlaying.toString()}</div>
-          <div>isRoomCreator: {this.state.isRoomCreator.toString()}</div>
-          <div>createDisabled: {this.state.createDisabled.toString()}</div>
-        </div>
       </div>
     );
     }

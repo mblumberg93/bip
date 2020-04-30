@@ -1,9 +1,3 @@
-.state-view {
-  position: fixed;
-  right: 100px;
-  top: 10px;
-}
-
 .lobby {
   position: fixed;
   left: 10%;

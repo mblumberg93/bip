@@ -10,6 +10,18 @@ class Table extends Component {
         };
     }
 
+    componentDidUpdate() {
+        if (this.gameChannel === null || this.props.pubnub === null) {
+            return;
+        }
+
+        this.props.pubnub.getMessage(this.props.gameChannel, (msg) => {
+            if (msg.message.isMove) {
+                this.updateGrid(msg.message.side, msg.message.row, msg.message.column)
+            }
+        });
+    }
+
     squareHasCup(formation, row, column) {
         for (const position of formation) {
             if (position.row === row && position.column === column) {
@@ -27,26 +39,64 @@ class Table extends Component {
                 const r = side === 'left' ? row : 6 - row;
                 const c = side === 'left' ? column : 6 - column;
                 const hasCup = this.squareHasCup(formation, r, c);
-                grid.push({row: r, column: c, hasCup: hasCup});
+                grid.push({
+                    row: r, 
+                    column: c, 
+                    hasCup: hasCup,
+                    active: hasCup
+                });
             });
         });
         return grid;
     }
+
+    updateGrid(side, row, column) {
+        const grid = side === "left" ? this.state.left_grid : this.state.right_grid;
+        grid.forEach((position) => {
+            if (position.row === row && position.column === column) {
+                position.active = !position.active;
+            }
+        });
+        if (side === "left") {
+            this.setState({ left_grid: grid });
+        } else {
+            this.setState({ right_grid: grid });
+        }
+    }
+
+    handleCupClick(event) {
+        if (this.props.currentTurn !== this.props.myPlayer) {
+            return;
+        }
+        if (event.side === this.props.myPlayer){
+            return;
+        }
+        this.props.pubnub.publish({
+            message: {
+                isMove: true,
+                side: event.side,
+                row: event.row,
+                column: event.column
+            },
+            channel: this.props.gameChannel
+        });
+    }
+
 
     render() {
         return (
             <div className="table">
                 { this.props.isPlaying &&
                     <React.Fragment>
-<                       Rack key={"left"} 
+                      <Rack key={"left"} 
                              side={"left"}
                              grid={this.state.left_grid}
-                             turn={this.props.turn}>
+                             handleCupClick={(event) => this.handleCupClick(event)}>
                         </Rack>
                         <Rack key={"right"} 
                               side={"right"}
                               grid={this.state.right_grid}
-                              turn={this.props.turn}>
+                              handleCupClick={(event) => this.handleCupClick(event)}>
                         </Rack>
                     </React.Fragment>
                 }

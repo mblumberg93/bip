@@ -7,8 +7,12 @@ class Square extends Component {
         this.state = { };
     }
 
-    handleCupClick(active) {
-        //potential do something here down the road
+    handleCupClick() {
+        this.props.handleCupClick({
+            side: this.props.side,
+            row: this.props.row,
+            column: this.props.column
+        });
     }
 
     render() {
@@ -17,9 +21,9 @@ class Square extends Component {
                 { this.props.hasCup && 
                    <Cup key={"cup_" + this.props.side + this.props.index}
                         side={this.props.side}
-                        turn={this.props.turn}
                         index={this.props.index}
-                        handleClick={active => this.handleCupClick(active)}>
+                        active={this.props.active}
+                        handleClick={() => this.handleCupClick()}>
                    </Cup> 
                 }
             </div>

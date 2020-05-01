@@ -37,9 +37,10 @@ class Game extends Component {
     }
 
     rerack(side, value) {
+        const sideToSet = side === "left" ? "right" : "left"
         const formation = FORMATIONS.filter(formation => formation.value === parseInt(value))[0].formation;
-        const grid = this.setGrid(side, formation);
-        if (side === "right") {
+        const grid = this.setGrid(sideToSet, formation);
+        if (sideToSet === "left") {
             this.setState({ left_grid: grid });
         } else {
             this.setState({ right_grid: grid });

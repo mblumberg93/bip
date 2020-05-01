@@ -189,6 +189,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <div className="help"><a href="https://github.com/mblumberg93/bip" target="_blank">click here for instructions on how to play</a></div>
         { this.state.isPlaying &&
           <div className={"you-are you-are-" + this.state.myPlayer}>
             <h2>You are: <span className="you-are-side">{this.state.myPlayer}</span></h2>

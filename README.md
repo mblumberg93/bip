@@ -1,68 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Welcome to BIP - Beer[Internet]Pong
 
-## Available Scripts
+This is a web app for tracking beer pong games online with your friends.
 
-In the project directory, you can run:
+Below we explain how to play.
 
-### `yarn start`
+### Step 1 - Create A Game
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+First, have both you and your opponent open the BIP site on a laptop or desktop computer. When you first arrive at the site, click Create Game to generate a unique game code. After you generate the code, copy it and send it to your opponent.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Step 2 - Join A Game
 
-### `yarn test`
+When your opponent receives the code, they paste it into the input box labeled "Enter Game Code" and click "Join Game". After doing that both of your screens should update to show the cups on the table and your side will be displayed above the table.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Step 3 - Decide Who Starts
 
-### `yarn build`
+Below the table both you and your opponents should see buttons saying "left start" and "right start". Both of you should be able to click these buttons. When you have decided who should start, one of you click the appropriate button and the game begins. You will both see a message under the side currently playing indicating who's turn it is and the player who's turn it is will see an "end turn" button and a dropdown for reracking.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Step 4 - Taking Turns
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+When you make cups in the real world, click the cups on the screen to mark them as "inactive". When cups are inactive they will turn grey. You can click them again to make them "active" in the even you clicked the wrong cup. When your turn is done click "end turn" and it will be your opponents turn.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Step 5 - Reracking
 
-### `yarn eject`
+During your turn you have the ability to rerack by clicking an option from the dropdown labelled "rerack". When you select an option the formation on your opponents side of the table will change to the selected rack. Note, reracking resets any inactive cups.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Step 5 - End the Game
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+When the game is over simply click "End Game". 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+### And that's all folks!

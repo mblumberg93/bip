@@ -189,6 +189,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        { this.state.isPlaying &&
+          <div className={"you-are you-are-" + this.state.myPlayer}>
+            <h2>You are: <span className="you-are-side">{this.state.myPlayer}</span></h2>
+          </div>
+        }
         <Lobby roomId={this.roomId}
                isPlaying={this.state.isPlaying}
                isRoomCreator={this.state.isRoomCreator}

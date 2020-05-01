@@ -34,6 +34,38 @@
   color: blue;
 }
 
+.side-info-controls {
+  display: flex;
+}
+
+.side-info-controls-right {
+  flex-direction: row-reverse;
+}
+
+.side-info-controls-sub {
+  align-self: flex-end;
+  padding: 0 10px;
+}
+
+.you-are {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.you-are .you-are-side {
+  color: white;
+  padding: 2px;
+}
+
+.you-are-left .you-are-side {
+  background-color: red;
+}
+
+.you-are-right .you-are-side {
+  background-color: blue;;
+}
+
 .table  {
   width: 80%;
   height: 35vw;
@@ -74,10 +106,14 @@
   margin-top: -45%;
   margin-left: -45%;
   border-radius: 50%;
-  
+  display: none;
   box-sizing: border-box;
   border: 1px solid white;
   cursor: pointer;
+}
+
+.cup-visible {
+  display: block;
 }
 
 .cup-left {

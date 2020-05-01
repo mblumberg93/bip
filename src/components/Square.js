@@ -23,6 +23,7 @@ class Square extends Component {
                         side={this.props.side}
                         index={this.props.index}
                         active={this.props.active}
+                        visible={this.props.hasCup}
                         handleClick={() => this.handleCupClick()}>
                    </Cup> 
                 }

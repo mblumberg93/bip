@@ -36,7 +36,7 @@ class Lobby extends Component {
                             </div>
                             <div className="lobby-section lobby-section-join">
                                 <label>
-                                    Enter Room ID:
+                                    Enter Game Code:
                                     <input type="text" onChange={(e) => this.handleNewRoomChange(e)}></input>
                                 </label>
                                 <button onClick={() => this.handleJoinRoom()}>Join Game</button>
@@ -48,9 +48,9 @@ class Lobby extends Component {
                         <button onClick={() => this.handleEndGame()}>End Game</button>
                     </div>
                     }
-                    { this.props.isRoomCreator && 
+                    { this.props.isRoomCreator && !this.props.isPlaying && 
                         <div className="lobby-section lobby-section-room">
-                            <b>Room ID: {this.props.roomId}</b>
+                            <b>Share This Game Code With Your Opponent: {this.props.roomId}</b>
                         </div>
                     }
                 </div>

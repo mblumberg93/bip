@@ -2,6 +2,8 @@
 
 This is a web app for tracking beer pong games online with your friends.
 
+You can try it out [here](https://mblumberg93.github.io/bip/).
+
 Below we explain how to play.
 
 ### Step 1 - Create A Game

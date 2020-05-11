@@ -46,7 +46,8 @@ class SideInfo extends Component {
                 { (this.props.currentTurn === this.props.side) &&
                     <div className={"side-info-controls side-info-controls-" + this.props.side}>
                         <div className="side-info-controls-sub">
-                            <h4 className={"side-info-head side-info-head-" + this.props.side}>{this.props.side}'s turn</h4>
+                            <h4 className={"side-info-head side-info-head-" + this.props.side}>
+                                {this.props.side === this.props.myPlayer ? "your" : (this.props.opponentsName + "'s") } turn</h4>
                             { this.props.myTurn &&
                                 <button onClick={() => this.handleEndTurn()}>end turn</button>
                             }

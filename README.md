@@ -8,11 +8,11 @@ Below we explain how to play.
 
 ### Step 1 - Create A Game
 
-First, have both you and your opponent open the BIP site on a laptop or desktop computer. When you first arrive at the site, click Create Game to generate a unique game code. After you generate the code, copy it and send it to your opponent.
+First, have both you and your opponent open the BIP site on a laptop or desktop computer. When you first arrive at the site, one of you enters your Team Name in the specified box and clicks Create Game to generate a unique game code. After you generate the code, copy it and send it to your opponent.
 
 ### Step 2 - Join A Game
 
-When your opponent receives the code, they paste it into the input box labeled "Enter Game Code" and click "Join Game". After doing that both of your screens should update to show the cups on the table and your side will be displayed above the table.
+Your opponent starts off by entering their Team Name. Then when your opponent receives the code, they paste it into the input box labeled "Enter Game Code" and click "Join Game". After doing that both of your screens should update to show the cups on the table and your Team Name and side will be displayed above the table.
 
 ### Step 3 - Decide Who Starts
 

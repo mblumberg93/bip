@@ -18,7 +18,6 @@ class Game extends Component {
         }
 
         this.props.pubnub.getMessage(this.props.gameChannel, (msg) => {
-            console.log(msg);
             if (msg.message.isMove) {
                 this.updateGrid(msg.message.side, msg.message.row, msg.message.column)
             }
@@ -101,6 +100,7 @@ class Game extends Component {
                                   myPlayer={this.props.myPlayer}
                                   pubnub={this.props.pubnub}
                                   gameChannel={this.props.gameChannel}
+                                  opponentsName={this.props.opponentsName}
                                   handleStart={() => this.handleChooseStartSide("left")}
                                   handleEndTurn={() => this.handleEndTurn()}>
                         </SideInfo>
@@ -111,6 +111,7 @@ class Game extends Component {
                                   myPlayer={this.props.myPlayer}
                                   pubnub={this.props.pubnub}
                                   gameChannel={this.props.gameChannel}
+                                  opponentsName={this.props.opponentsName}
                                   handleStart={() => this.handleChooseStartSide("right")}
                                   handleEndTurn={() => this.handleEndTurn()}>
                         </SideInfo>

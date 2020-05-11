@@ -5,15 +5,16 @@ class Lobby extends Component {
         super(props)
         this.state = {
             newRoom: '',
+            newName: ''
         }
     }
 
     handleCreateRoom() {
-        this.props.handleCreateRoom();
+        this.props.handleCreateRoom(this.state.newName);
     }
 
     handleJoinRoom() {
-        this.props.handleJoinRoom(this.state.newRoom);
+        this.props.handleJoinRoom(this.state.newRoom, this.state.newName);
     }
 
     handleEndGame() {
@@ -24,6 +25,10 @@ class Lobby extends Component {
         this.setState({ newRoom: e.target.value });
     }
 
+    handleNewNameChange(e) {
+        this.setState({ newName: e.target.value });
+    }
+
     render() {
         return (
             <div className="lobby">
@@ -31,8 +36,23 @@ class Lobby extends Component {
                 <div>
                     { !this.props.isPlaying && !this.props.isRoomCreator &&  
                         <React.Fragment>
+                            <div className="lobby-section">
+                                <h4>Step 1:</h4>
+                            </div>
+                            <div className="lobby-section">
+                                <label>
+                                    Enter Team Name:
+                                    <input type="text" onChange={(e) => this.handleNewNameChange(e)}></input>
+                                </label>
+                            </div>
+                            <div className="lobby-section">
+                                <h4>Step 2:</h4>
+                            </div>
                             <div className="lobby-section lobby-section-create">
                                 <button onClick={() => this.handleCreateRoom()}>Create Game</button>
+                            </div>
+                            <div className="lobby-section">
+                            <   h4>Or</h4>
                             </div>
                             <div className="lobby-section lobby-section-join">
                                 <label>

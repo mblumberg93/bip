@@ -20,7 +20,9 @@ class App extends Component {
       myTurn: false,
       isPlaying: false, // Set to true when 2 players are in a channel
       isRoomCreator: false,
-      createDisabled: false // whether the create button is disabled
+      createDisabled: false, // whether the create button is disabled
+      myName: "",
+      opponentsName: ""
     };
 
     this.lobbyChannel = null; // Lobby channel
@@ -47,7 +49,11 @@ class App extends Component {
             channels: [this.gameChannel]
           });
 
-          if (!this.state.isRoomCreator) {
+          if (this.state.isRoomCreator) {
+            this.setState({opponentsName: msg.message.playerName});
+            this.sendCreatorName();
+          } else {
+            this.setState({myName: msg.message.playerName});
             this.setState({myPlayer: 'right'})
           }
 
@@ -71,8 +77,21 @@ class App extends Component {
         if (msg.message.endGame && msg.message.side !== this.state.myPlayer) {
           alert("The Game Has Ended");
         }
+        if (msg.message.creatorNameUpdate && !this.state.isRoomCreator) {
+          this.setState({opponentsName: msg.message.playerName });
+        }
       }); 
     }
+  }
+
+  sendCreatorName() {
+    this.pubnub.publish({
+      message: {
+        creatorNameUpdate: true,
+        playerName: this.state.myName
+      },
+      channel: this.lobbyChannel
+    });
   }
 
   makeid(length) {
@@ -85,7 +104,7 @@ class App extends Component {
     return result;
  }
 
-  handleCreateRoom() {
+  handleCreateRoom(name) {
     // Create a random name for the channel
     this.roomId = this.makeid(5);
     this.lobbyChannel = 'biplobby--' + this.roomId;
@@ -100,10 +119,11 @@ class App extends Component {
       isRoomCreator: true,
       createDisabled: true, // Disable the 'Create' button
       myTurn: false, // Room creator makes the 1st move
+      myName: name
     });
   }
 
-  handleJoinRoom(room) {
+  handleJoinRoom(room, name) {
     this.roomId = room;
     this.lobbyChannel = 'biplobby--' + this.roomId;
 
@@ -124,6 +144,7 @@ class App extends Component {
           this.pubnub.publish({
             message: {
               startGame: true,
+              playerName: name
             },
             channel: this.lobbyChannel
           });
@@ -192,14 +213,14 @@ class App extends Component {
         <div className="help"><a href="https://github.com/mblumberg93/bip" target="_blank">click here for instructions on how to play</a></div>
         { this.state.isPlaying &&
           <div className={"you-are you-are-" + this.state.myPlayer}>
-            <h2>You are: <span className="you-are-side">{this.state.myPlayer}</span></h2>
+            <h2>Welcome {this.state.myName}! Your side is <span className="you-are-side">{this.state.myPlayer}</span></h2>
           </div>
         }
         <Lobby roomId={this.roomId}
                isPlaying={this.state.isPlaying}
                isRoomCreator={this.state.isRoomCreator}
-               handleCreateRoom={() => this.handleCreateRoom()}
-               handleJoinRoom={(room) => this.handleJoinRoom(room)}
+               handleCreateRoom={(name) => this.handleCreateRoom(name)}
+               handleJoinRoom={(room, name) => this.handleJoinRoom(room, name)}
                handleEndGame={() => this.handleEndGame()}>
         </Lobby>
         <Game currentTurn={this.state.currentTurn}
@@ -208,6 +229,7 @@ class App extends Component {
               isPlaying={this.state.isPlaying}
               pubnub={this.pubnub}
               gameChannel={this.gameChannel}
+              opponentsName={this.state.opponentsName}
               handleChooseStartSide={(side) => this.handleChooseStartSide(side)}
               handleEndTurn={() => this.handleEndTurn()}>
         </Game>

@@ -24,6 +24,12 @@ class Game extends Component {
             if (msg.message.rerack) {
                 this.rerack(msg.message.side, msg.message.value);
             }
+            if (msg.message.resetGame) {
+                this.setState({
+                    left_grid: this.setGrid('left', STANDARD.formation),
+                    right_grid: this.setGrid('right', STANDARD.formation)
+                })
+            }
         });
     }
 

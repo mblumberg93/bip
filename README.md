@@ -12,7 +12,7 @@ First, have both you and your opponent open the BIP site on a laptop or desktop 
 
 ### Step 2 - Join A Game
 
-Your opponent starts off by entering their Team Name. Then when your opponent receives the code, they paste it into the input box labeled "Enter Game Code" and click "Join Game". After doing that both of your screens should update to show the cups on the table and your Team Name and side will be displayed above the table.
+Your opponent starts off by entering their Team Name. Then when your opponent receives the code, they paste it into the input box labeled "Enter Game Code" and click "Join Game". After doing that, you should both see an alert with the name of your opponent. Both of your screens should update to show the cups on the table and your Team Name and side will be displayed above the table.
 
 ### Step 3 - Decide Who Starts
 
@@ -26,8 +26,12 @@ When you make cups in the real world, click the cups on the screen to mark them 
 
 During your turn you have the ability to rerack by clicking an option from the dropdown labelled "rerack". When you select an option the formation on your opponents side of the table will change to the selected rack. Note, reracking resets any inactive cups.
 
-### Step 5 - End the Game
+### Step 6 - New Round
 
-When the game is over simply click "End Game". 
+When you've finished a game and you'd like to play another round, click "Reset Table" in the top right and your racks will return to the standard formation.
+
+### Step 7 - End the Game
+
+When you'd like to stop playing simply refresh your browser. 
 
 ### And that's all folks!

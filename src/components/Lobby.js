@@ -17,8 +17,8 @@ class Lobby extends Component {
         this.props.handleJoinRoom(this.state.newRoom, this.state.newName);
     }
 
-    handleEndGame() {
-        this.props.handleEndGame();
+    handleResetTable() {
+        this.props.handleResetTable();
     }
     
     handleNewRoomChange(e) {
@@ -65,7 +65,7 @@ class Lobby extends Component {
                     }
                     { this.props.isPlaying && 
                     <div className="lobby-section lobby-section-end">
-                        <button onClick={() => this.handleEndGame()}>End Game</button>
+                        <button onClick={() => this.handleResetTable()}>Reset Table</button>
                     </div>
                     }
                     { this.props.isRoomCreator && !this.props.isPlaying && 

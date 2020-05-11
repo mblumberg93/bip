@@ -51,6 +51,7 @@ class App extends Component {
 
           if (this.state.isRoomCreator) {
             this.setState({opponentsName: msg.message.playerName});
+            alert("You opponent is " + msg.message.playerName);
             this.sendCreatorName();
           } else {
             this.setState({myName: msg.message.playerName});
@@ -79,6 +80,7 @@ class App extends Component {
         }
         if (msg.message.creatorNameUpdate && !this.state.isRoomCreator) {
           this.setState({opponentsName: msg.message.playerName });
+          alert("You opponent is " + msg.message.playerName);
         }
       }); 
     }
@@ -157,31 +159,13 @@ class App extends Component {
     });
   }
 
-  handleEndGame() {
+  handleResetTable() {
     this.pubnub.publish({
       message: {
-        endGame: true,
-        side: this.state.myPlayer
+        resetGame: true
       },
-      channel: this.lobbyChannel
+      channel: this.gameChannel
     });
-
-    this.setState({
-      currentTurn: null,
-      myPlayer: null,
-      myTurn: false,
-      isPlaying: false,
-      isRoomCreator: false,
-      createDisabled: false
-    });
-
-    this.pubnub.unsubscribe({
-      channels : [this.lobbyChannel, this.gameChannel]
-    });
-
-    this.lobbyChannel = null;
-    this.gameChannel = null;
-    this.roomId = null;
   }
 
   handleChooseStartSide(side) {
@@ -221,7 +205,7 @@ class App extends Component {
                isRoomCreator={this.state.isRoomCreator}
                handleCreateRoom={(name) => this.handleCreateRoom(name)}
                handleJoinRoom={(room, name) => this.handleJoinRoom(room, name)}
-               handleEndGame={() => this.handleEndGame()}>
+               handleResetTable={() => this.handleResetTable()}>
         </Lobby>
         <Game currentTurn={this.state.currentTurn}
               myPlayer={this.state.myPlayer}

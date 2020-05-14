@@ -24,7 +24,7 @@ When you make cups in the real world, click the cups on the screen to mark them 
 
 ### Step 5 - Reracking
 
-During your turn you have the ability to rerack by clicking an option from the dropdown labelled "rerack". When you select an option the formation on your opponents side of the table will change to the selected rack. Note, reracking resets any inactive cups.
+During your turn you have the ability to rerack by clicking an option from the dropdown labelled "rerack". When you select an option the formation on your opponents side of the table will change to the selected rack. The options in rerack dropdown are based on how many cups are available. Note, reracking resets any inactive cups.
 
 ### Step 6 - New Round
 

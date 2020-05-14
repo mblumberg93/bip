@@ -109,7 +109,7 @@ export const TINYTRIANGLE = {
 
 export const PLAYBUTTON = {
     value: 8,
-    name: "Play Button",
+    name: "Belly Button (Play Button)",
     cups: 3,
     formation: [
         { row: 2, column: 0 },

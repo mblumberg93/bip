@@ -1,22 +1,7 @@
 import React, { Component } from 'react';
 import Select from './Select';
-import { FORMATIONS } from '../formations';
 
 class SideInfo extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            formationOptions: this.setFormationOptions()
-        }
-    }
-
-    setFormationOptions() {
-        const options = FORMATIONS.map((formation) => {
-            return {value: formation.value, name: formation.name}
-        });
-        return options;
-    }
-
     handleStart() {
         this.props.handleStart();
     }
@@ -26,14 +11,16 @@ class SideInfo extends Component {
     }
 
     handleFormationChange(value) {
-        this.props.pubnub.publish({
-            message: {
-                rerack: true,
-                side: this.props.side,
-                value: value
-            },
-            channel: this.props.gameChannel
-        });
+        if (value) {
+            this.props.pubnub.publish({
+                message: {
+                    rerack: true,
+                    side: this.props.side,
+                    value: value
+                },
+                channel: this.props.gameChannel
+            });
+        }
     }
 
     render() {
@@ -56,10 +43,13 @@ class SideInfo extends Component {
                             <div className="side-info-controls-sub">
                                 <Select key={"select" + this.props.side}
                                         label="rerack"
-                                        options={this.state.formationOptions}
+                                        options={this.props.formationOptions}
                                         handleChange={(value) => this.handleFormationChange(value)}></Select>
                             </div>
                         }
+                        <div className="side-info-controls-sub">
+                            { this.props.cupsRemaining } cup(s) remaining
+                        </div>
                     </div>
                 }
             </div>

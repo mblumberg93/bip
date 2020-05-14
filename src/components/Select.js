@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
 class Select extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     handleChange(e) {
-        this.props.handleChange(e.target.value);
+        if (e.target.value) {
+            this.props.handleChange(e.target.value);
+        }
     }
 
     render() {
@@ -18,6 +16,7 @@ class Select extends Component {
                 <label>
                     { this.props.label }
                     <select onChange={this.handleChange.bind(this)} value={this.props.value}>
+                        <option key="please-select" value={null}>Select an Option</option>
                         { options }
                     </select>
             </label>

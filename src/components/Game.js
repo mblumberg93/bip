@@ -7,8 +7,12 @@ class Game extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            left_cups_remaining: 10,
+            right_cups_remaining: 10,
             left_grid: this.setGrid('left', STANDARD.formation),
-            right_grid: this.setGrid('right', STANDARD.formation)
+            right_grid: this.setGrid('right', STANDARD.formation),
+            left_formation_options: this.setFormationOptions(10),
+            right_formation_options: this.setFormationOptions(10)
         };
     }
 
@@ -26,8 +30,12 @@ class Game extends Component {
             }
             if (msg.message.resetGame) {
                 this.setState({
+                    left_cups_remaining: 10,
+                    right_cups_remaining: 10,
                     left_grid: this.setGrid('left', STANDARD.formation),
-                    right_grid: this.setGrid('right', STANDARD.formation)
+                    right_grid: this.setGrid('right', STANDARD.formation),
+                    left_formation_options: this.setFormationOptions(10),
+                    right_formation_options: this.setFormationOptions(10)
                 })
             }
         });
@@ -43,8 +51,9 @@ class Game extends Component {
 
     rerack(side, value) {
         const sideToSet = side === "left" ? "right" : "left"
-        const formation = FORMATIONS.filter(formation => formation.value === parseInt(value))[0].formation;
-        const grid = this.setGrid(sideToSet, formation);
+        const formation = FORMATIONS.filter(formation => formation.value === parseInt(value))[0];
+        this.updateCupCount(side, formation.cups);
+        const grid = this.setGrid(sideToSet, formation.formation);
         if (sideToSet === "left") {
             this.setState({ left_grid: grid });
         } else {
@@ -85,6 +94,7 @@ class Game extends Component {
         grid.forEach((position) => {
             if (position.row === row && position.column === column) {
                 position.active = !position.active;
+                this.addOrRemoveCups((side === "left" ? "right" : "left"), (position.active ? 1 : -1));
             }
         });
         if (side === "left") {
@@ -92,6 +102,44 @@ class Game extends Component {
         } else {
             this.setState({ right_grid: grid });
         }
+    }
+
+    addOrRemoveCups(side, change) {
+        if (side === "left") {
+            const cups = this.state.left_cups_remaining + change;
+            this.setState({ 
+                left_cups_remaining: cups,
+                left_formation_options: this.setFormationOptions(cups)
+            });
+        } else {
+            const cups = this.state.right_cups_remaining + change;
+            this.setState({ 
+                right_cups_remaining: cups,
+                right_formation_options: this.setFormationOptions(cups)
+            });
+        }
+    }
+
+
+    updateCupCount(side, value) {
+        if (side === "left") {
+            this.setState({ 
+                left_cups_remaining: value,
+                left_formation_options: this.setFormationOptions(value)
+            });
+        } else {
+            this.setState({ 
+                right_cups_remaining: value,
+                right_formation_options: this.setFormationOptions(value)
+            });
+        }
+    }
+
+    setFormationOptions(cups) {
+        const options = FORMATIONS.filter(formation => formation.cups === cups).map((formation) => {
+            return {value: formation.value, name: formation.name}
+        });
+        return options;
     }
 
     render() {
@@ -107,6 +155,8 @@ class Game extends Component {
                                   pubnub={this.props.pubnub}
                                   gameChannel={this.props.gameChannel}
                                   opponentsName={this.props.opponentsName}
+                                  cupsRemaining={this.state.left_cups_remaining}
+                                  formationOptions={this.state.left_formation_options}
                                   handleStart={() => this.handleChooseStartSide("left")}
                                   handleEndTurn={() => this.handleEndTurn()}>
                         </SideInfo>
@@ -118,6 +168,8 @@ class Game extends Component {
                                   pubnub={this.props.pubnub}
                                   gameChannel={this.props.gameChannel}
                                   opponentsName={this.props.opponentsName}
+                                  cupsRemaining={this.state.right_cups_remaining}
+                                  formationOptions={this.state.right_formation_options}
                                   handleStart={() => this.handleChooseStartSide("right")}
                                   handleEndTurn={() => this.handleEndTurn()}>
                         </SideInfo>
